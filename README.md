@@ -51,7 +51,7 @@ Extra capabilities are presented to deal with the above 2 problems.
 Add a checkpoint message to each call to any function of stopwatch.
 
 ```js
-const Stopwatch = 'performance-stopwatch';
+const { Stopwatch } = require('performance-stopwatch');
 const sw = new Stopwatch();
 
 sw.start('start of func');
@@ -74,7 +74,7 @@ When initialising, simply include a logger-related function that will be called 
 
 ```js
 const logger = './utils/logger';
-const Stopwatch = 'performance-stopwatch';
+const { Stopwatch } = require('performance-stopwatch');
 const sw = new Stopwatch({
   loggerFunc: logger.info,
 });

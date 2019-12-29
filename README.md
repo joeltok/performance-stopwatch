@@ -17,7 +17,7 @@ $ yarn add performance-stopwatch
 # Simple Usage
 
 ```js
-const Stopwatch = 'performance-stopwatch';
+const Stopwatch = require('performance-stopwatch');
 const sw = new Stopwatch();
 
 sw.start();   // -- (1)

@@ -4,7 +4,8 @@ class Stopwatch {
   }
 
   start(checkpoint) {
-    this.prevTime = new Date().valueOf();
+    this.startTime = new Date().valueOf();
+    this.prevTime = this.startTime;
     this._log(checkpoint, `stopwatch started`)
   }
 
@@ -25,7 +26,9 @@ class Stopwatch {
       this._log(checkpoint, 'stopwatch not started');
       return false;
     }
-    this._log(checkpoint, `${this.prevTime} ms since start`)
+    const currTime = new Date().valueOf();
+    const totalTime = currTime - this.startTime;
+    this._log(checkpoint, `${totalTime} ms since start`)
     return this.prevTime
   }
 

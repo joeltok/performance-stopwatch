@@ -1,6 +1,7 @@
 class Stopwatch {
   constructor(options = {}) {
     this.loggerFunc = options.loggerFunc;
+    this.divider = options.divider;
     this.timings = []
   }
 
@@ -36,7 +37,7 @@ class Stopwatch {
 
   _log(message, appendment) {
     let logString = '';
-    if (message) { logString += `${message} - ` };
+    if (message) { logString += `${message} ${this.divider || '-'} ` };
     logString += appendment
 
     if (this.loggerFunc) {

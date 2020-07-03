@@ -82,4 +82,23 @@ describe('index.spec.js', function () {
     assert(consoleErrorSpy.callCount, 1)
     assert(logger.info.callCount == 0, true)
   })
+
+  it ('# should use divider if present', () => {
+    const sw = new Stopwatch({
+      id: 'some-test-id',
+      divider: '|'
+    });
+
+    sw.start('checkpoint-1')
+    assert(consoleSpy.callCount, 1)
+    assert(consoleSpy.calledWith('checkpoint-1 | stopwatch started'), true)
+
+    sw.lap('checkpoint-2')
+    sw.lap('checkpoint-3')
+    assert(consoleSpy.callCount, 3)
+
+    sw.total('checkpoint-4')
+    assert(consoleSpy.callCount, 4)
+  })
+
 })

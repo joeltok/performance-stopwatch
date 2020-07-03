@@ -78,9 +78,7 @@ describe('index.spec.js', function () {
       loggerFunc: logger,
     });
 
-    sw.start()
-    assert(consoleErrorSpy.callCount, 1)
-    assert(logger.info.callCount == 0, true)
+    assert.throws(sw.start)
   })
 
   it ('# should use divider if present', () => {

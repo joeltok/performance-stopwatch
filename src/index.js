@@ -12,11 +12,7 @@ class Stopwatch {
   }
 
   lap(message) {
-    if (this.timings.length == 0) {
-      this._log(message, 'stopwatch not started');
-      return;
-    }
-
+    this._checkStarted()
     const now = new Date().valueOf();
     const lapTime = now - this.timings[this.timings.length-1];
     this.timings.push(now)
@@ -25,14 +21,17 @@ class Stopwatch {
   }
 
   total(message) {
-    if (this.timings.length == 0) {
-      this._log(message, 'stopwatch not started');
-      return;
-    }
+    this._checkStarted()
     const now = new Date().valueOf();
     const totalTime = now - this.timings[0];
     this._log(message, `${totalTime} ms since start`)
     return totalTime
+  }
+
+  _checkStarted() {
+    if (this.timings.length == 0) {
+      throw new Error('stopwatch not started');
+    }
   }
 
   _log(message, appendment) {
@@ -44,7 +43,7 @@ class Stopwatch {
       try {
         this.loggerFunc(logString)
       } catch (err) {
-        console.error(`loggerFunc options needs to be a function`)
+        throw new Error(`option loggerFunc needs to be a function`)
       }
     } else {
       console.log(logString)

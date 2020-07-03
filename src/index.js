@@ -1,41 +1,43 @@
 class Stopwatch {
   constructor(options = {}) {
     this.loggerFunc = options.loggerFunc;
+    this.timings = []
   }
 
-  start(checkpoint) {
-    this.startTime = new Date().valueOf();
-    this.prevTime = this.startTime;
-    this._log(checkpoint, `stopwatch started`)
+  start(message) {
+    const now = new Date().valueOf();
+    this.timings.push(now)
+    this._log(message, `stopwatch started`)
   }
 
-  lap(checkpoint) {
-    if (!this.prevTime) {
-      this._log(checkpoint, 'stopwatch not started');
+  lap(message) {
+    if (this.timings.length == 0) {
+      this._log(message, 'stopwatch not started');
       return;
     }
-    const currTime = new Date().valueOf();
-    const lapTime = currTime - this.prevTime;
-    this.prevTime = currTime;
-    this._log(checkpoint, `${lapTime} ms from previous checkpoint`)
+
+    const now = new Date().valueOf();
+    const lapTime = now - this.timings[this.timings.length-1];
+    this.timings.push(now)
+    this._log(message, `${lapTime} ms from previous lap`)
     return lapTime
   }
 
-  total(checkpoint) {
-    if (!this.prevTime) {
-      this._log(checkpoint, 'stopwatch not started');
-      return false;
+  total(message) {
+    if (this.timings.length == 0) {
+      this._log(message, 'stopwatch not started');
+      return;
     }
-    const currTime = new Date().valueOf();
-    const totalTime = currTime - this.startTime;
-    this._log(checkpoint, `${totalTime} ms since start`)
-    return this.prevTime
+    const now = new Date().valueOf();
+    const totalTime = now - this.timings[0];
+    this._log(message, `${totalTime} ms since start`)
+    return totalTime
   }
 
-  _log(checkpoint, message) {
+  _log(message, appendment) {
     let logString = '';
-    if (checkpoint) { logString += `${checkpoint} - ` };
-    logString += message
+    if (message) { logString += `${message} - ` };
+    logString += appendment
 
     if (this.loggerFunc) {
       try {

@@ -48,7 +48,7 @@ Extra capabilities are presented to deal with the above 2 problems.
 
 ## Checkpoint messages - Tackling problem (1)
 
-Add a checkpoint message to each call to any function of stopwatch.
+Add a message to each call to any function of stopwatch.
 
 ```js
 const { Stopwatch } = require('performance-stopwatch');
@@ -63,10 +63,32 @@ sw.total('end of func');
 This will output:
 ```sh
 start of func - stopwatch started
-after loop - 100 ms from previous checkpoint
-after database calls - 20000 ms from previous checkpoint
+after loop - 100 ms from previous lap
+after database calls - 20000 ms from previous lap
 end of func - 20100 ms since start
 ```
+
+We can even customize the '-' divider.
+```js
+const { Stopwatch } = require('performance-stopwatch');
+const sw = new Stopwatch({
+  divider: '|'
+});
+
+sw.start('start of func');
+sw.lap('after loop');
+sw.lap('after database calls');
+sw.total('end of func');
+```
+
+This will output:
+```sh
+start of func | stopwatch started
+after loop | 100 ms from previous lap
+after database calls | 20000 ms from previous lap
+end of func | 20100 ms since start
+```
+
 
 ## Custom logger function - Tackling problem (2)
 
